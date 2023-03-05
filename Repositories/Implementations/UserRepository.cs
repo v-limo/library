@@ -1,37 +1,51 @@
 using library.Models;
 using library.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace library.Repositories.Implementations;
 
 public class UserRepository : IUserRepository
 {
-    public Task<User> CreateUserAsync(User user)
+    private readonly ApplicationDbContext _DBcontext;
+
+    public UserRepository(ApplicationDbContext dBcontext)
     {
-        throw new NotImplementedException();
+        _DBcontext = dBcontext;
     }
 
-    public Task DeleteUserAsync(User user)
+    public async Task<User> CreateUserAsync(User user)
     {
-        throw new NotImplementedException();
+        await _DBcontext.Users.AddAsync(user);
+        await _DBcontext.SaveChangesAsync();
+        return user;
     }
 
-    public Task<List<User>> GetAllUsersAsync()
+    public async Task DeleteUserAsync(User user)
     {
-        throw new NotImplementedException();
+        _DBcontext.Users.Remove(user);
+        await _DBcontext.SaveChangesAsync();
     }
 
-    public Task<User> GetUserByEmailAsync(string email)
+    public async Task<List<User>> GetAllUsersAsync()
     {
-        throw new NotImplementedException();
+        return await _DBcontext.Users.ToListAsync();
     }
 
-    public Task<User> GetUserByIdAsync(int id)
+    public async Task<User> GetUserByEmailAsync(string email)
     {
-        throw new NotImplementedException();
+        return await _DBcontext.Users.
+        FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public Task UpdateUserAsync(User user)
+    public async Task<User> GetUserByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _DBcontext.Users.
+        FirstOrDefaultAsync(u => u.Id == id);
+    }
+
+    public async Task UpdateUserAsync(User user)
+    {
+        _DBcontext.Users.Update(user);
+        await _DBcontext.SaveChangesAsync();
     }
 }

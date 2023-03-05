@@ -1,43 +1,63 @@
 using library.Models;
 using library.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace library.Repositories.Implementations;
 
 
 public class BookRepository : IBookRepository
 {
-    public Task<Book> CreateBookAsync(Book book)
+
+
+    private readonly ApplicationDbContext _DBcontext;
+
+    public BookRepository(ApplicationDbContext DBcontext)
     {
-        throw new NotImplementedException();
+        _DBcontext = DBcontext;
+    }
+    public async Task<Book> CreateBookAsync(Book book)
+    {
+        _DBcontext.Books.Add(book);
+        await _DBcontext.SaveChangesAsync();
+        // Return the book with the ID, Book from the DB
+        return book;
     }
 
-    public Task DeleteBookAsync(Book book)
+    public async Task DeleteBookAsync(Book book)
     {
-        throw new NotImplementedException();
+        _DBcontext.Books.Remove(book);
+        await _DBcontext.SaveChangesAsync();
     }
 
-    public Task<List<Book>> GetAllBooksAsync()
+    public async Task<List<Book>> GetAllBooksAsync()
     {
-        throw new NotImplementedException();
+        return await _DBcontext.Books.ToListAsync();
     }
 
-    public Task<Book> GetBookByIdAsync(int id)
+    public async Task<Book> GetBookByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        return await _DBcontext.Books.
+        FirstOrDefaultAsync(b => b.Id == id);
     }
 
-    public Task<List<Book>> GetBooksByAuthorIdAsync(int authorId)
+    public async Task<List<Book>> GetBooksByAuthorIdAsync(int authorId)
     {
-        throw new NotImplementedException();
+        return await _DBcontext.Books
+        .Where(b => b.AuthorId == authorId)
+        .ToListAsync();
     }
 
-    public Task<List<Book>> GetBooksByUserIdAsync(int userId)
+    public async Task<List<Book>> GetBooksByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        return await _DBcontext.Books.
+        Where(b => b.UserId == userId)
+        .ToListAsync();
     }
 
-    public Task UpdateBookAsync(Book book)
+
+    public async Task UpdateBookAsync(Book book)
     {
-        throw new NotImplementedException();
+        _DBcontext.Books.Update(book);
+        await _DBcontext.SaveChangesAsync();
     }
 }
