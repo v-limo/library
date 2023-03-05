@@ -1,6 +1,3 @@
-using library.DTOs;
-using library.Models;
-
 namespace library.Service.Interfaces;
 
 public interface IUserService
@@ -11,5 +8,4 @@ public interface IUserService
     Task<UserDTO> CreateUserAsync(User user);
     Task UpdateUserAsync(User user);
     Task DeleteUserAsync(User user);
-
 }

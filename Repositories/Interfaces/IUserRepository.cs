@@ -1,6 +1,5 @@
-using library.Models;
-
 namespace library.Repositories.Interfaces;
+
 public interface IUserRepository
 {
     Task<List<User>> GetAllUsersAsync();

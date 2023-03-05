@@ -1,31 +1,21 @@
-using library.DTOs;
-using library.Models;
-using library.Repositories.Interfaces;
-using library.Service.Interfaces;
-
 namespace library.Service.Implementations;
 
 public class UserService : IUserService
 {
     // Will implement unit of work pattern and auto mapper in the future
     private readonly IUserRepository _userRepository;
+    private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository)
+    public UserService(IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
+        _mapper = mapper;
     }
 
     public async Task<UserDTO> CreateUserAsync(User user)
     {
         var createdUser = await _userRepository.CreateUserAsync(user);
-
-        var userDTO = new UserDTO
-        {
-            Id = createdUser.Id,
-            Email = createdUser.Email,
-            Name = createdUser.Name,
-        };
-
+        var userDTO = _mapper.Map<UserDTO>(createdUser);
         return userDTO;
     }
 
@@ -37,49 +27,21 @@ public class UserService : IUserService
     public async Task<List<UserDTO>> GetAllUsersAsync()
     {
         var users = await _userRepository.GetAllUsersAsync();
-
-        var userDTOs = new List<UserDTO>();
-
-        foreach (var user in users)
-        {
-            var userDTO = new UserDTO
-            {
-                Id = user.Id,
-                Email = user.Email,
-                Name = user.Name,
-            };
-
-            userDTOs.Add(userDTO);
-        }
-
+        var userDTOs = _mapper.Map<List<UserDTO>>(users);
         return userDTOs;
     }
 
     public async Task<UserDTO> GetUserByEmailAsync(string email)
     {
         var user = await _userRepository.GetUserByEmailAsync(email);
-
-        var userDTO = new UserDTO
-        {
-            Id = user.Id,
-            Email = user.Email,
-            Name = user.Name,
-        };
-
+        var userDTO = _mapper.Map<UserDTO>(user);
         return userDTO;
     }
 
     public async Task<UserDTO> GetUserByIdAsync(int id)
     {
         var user = await _userRepository.GetUserByIdAsync(id);
-
-        var userDTO = new UserDTO
-        {
-            Id = user.Id,
-            Email = user.Email,
-            Name = user.Name,
-        };
-
+        var userDTO = _mapper.Map<UserDTO>(user);
         return userDTO;
     }
 

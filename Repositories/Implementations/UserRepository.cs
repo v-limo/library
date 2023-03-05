@@ -1,7 +1,3 @@
-using library.Models;
-using library.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
 namespace library.Repositories.Implementations;
 
 public class UserRepository : IUserRepository
@@ -31,16 +27,14 @@ public class UserRepository : IUserRepository
         return await _DBcontext.Users.ToListAsync();
     }
 
-    public async Task<User> GetUserByEmailAsync(string email)
+    public async Task<User?> GetUserByEmailAsync(string email)
     {
-        return await _DBcontext.Users.
-        FirstOrDefaultAsync(u => u.Email == email);
+        return await _DBcontext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public async Task<User> GetUserByIdAsync(int id)
+    public async Task<User?> GetUserByIdAsync(int id)
     {
-        return await _DBcontext.Users.
-        FirstOrDefaultAsync(u => u.Id == id);
+        return await _DBcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task UpdateUserAsync(User user)

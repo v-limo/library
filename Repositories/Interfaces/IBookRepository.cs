@@ -1,5 +1,3 @@
-using library.Models;
-
 namespace library.Repositories.Interfaces;
 public interface IBookRepository
 {

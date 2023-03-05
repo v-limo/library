@@ -1,6 +1,3 @@
-using library.DTOs;
-using library.Models;
-
 namespace library.Service.Interfaces;
 
 public interface IAuthorService
@@ -11,5 +8,4 @@ public interface IAuthorService
     Task<AuthorDTO> CreateAuthorAsync(Author author);
     Task UpdateAuthorAsync(Author author);
     Task DeleteAuthorAsync(Author author);
-
 }

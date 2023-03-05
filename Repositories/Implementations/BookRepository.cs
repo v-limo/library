@@ -1,20 +1,14 @@
-using library.Models;
-using library.Repositories.Interfaces;
-using Microsoft.EntityFrameworkCore;
-
 namespace library.Repositories.Implementations;
-
 
 public class BookRepository : IBookRepository
 {
-
-
     private readonly ApplicationDbContext _DBcontext;
 
     public BookRepository(ApplicationDbContext DBcontext)
     {
         _DBcontext = DBcontext;
     }
+
     public async Task<Book> CreateBookAsync(Book book)
     {
         _DBcontext.Books.Add(book);
@@ -36,24 +30,18 @@ public class BookRepository : IBookRepository
 
     public async Task<Book> GetBookByIdAsync(int id)
     {
-        return await _DBcontext.Books.
-        FirstOrDefaultAsync(b => b.Id == id);
+        return await _DBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
     }
 
     public async Task<List<Book>> GetBooksByAuthorIdAsync(int authorId)
     {
-        return await _DBcontext.Books
-        .Where(b => b.AuthorId == authorId)
-        .ToListAsync();
+        return await _DBcontext.Books.Where(b => b.AuthorId == authorId).ToListAsync();
     }
 
     public async Task<List<Book>> GetBooksByUserIdAsync(int userId)
     {
-        return await _DBcontext.Books.
-        Where(b => b.UserId == userId)
-        .ToListAsync();
+        return await _DBcontext.Books.Where(b => b.UserId == userId).ToListAsync();
     }
-
 
     public async Task UpdateBookAsync(Book book)
     {

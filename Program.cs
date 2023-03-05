@@ -1,26 +1,40 @@
-using library.Repositories.Implementations;
-using library.Repositories.Interfaces;
-using library.Service.Implementations;
-using library.Service.Interfaces;
-using Microsoft.EntityFrameworkCore;
+global using AutoMapper;
+global using library.Data;
+global using library.DTOs;
+global using library.Models;
+global using library.Repositories.Implementations;
+global using library.Repositories.Interfaces;
+global using library.Service.Implementations;
+global using library.Service.Interfaces;
+global using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<
-ApplicationDbContext
->(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// add db context
+builder.Services.AddDbContext<ApplicationDbContext>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
+
+// inject services
 builder.Services.AddScoped<IBookService, BookService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthorService, AuthorService>();
+
+// inject repositories
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+
+// inject automapper
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

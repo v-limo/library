@@ -1,16 +1,16 @@
-using library.DTOs;
-using library.Models;
-using library.Repositories.Interfaces;
-using library.Service.Interfaces;
-
 namespace library.Service.Implementations;
 
 public class AuthorService : IAuthorService
 {
     // Will implement unit of work pattern and auto mapper in the future
-
-
     private readonly IAuthorRepository _authorRepository;
+    private readonly IMapper _mapper;
+
+    public AuthorService(IAuthorRepository authorRepository, IMapper mapper)
+    {
+        _authorRepository = authorRepository;
+        _mapper = mapper;
+    }
 
     public Task<AuthorDTO> CreateAuthorAsync(Author author)
     {
@@ -23,9 +23,7 @@ public class AuthorService : IAuthorService
     )
     {
         var createdAuthor = await _authorRepository.CreateAuthorAsync(author);
-
-        var authorDTO = new AuthorDTO { Id = createdAuthor.Id, Name = createdAuthor.Name, };
-
+        var authorDTO = _mapper.Map<AuthorDTO>(createdAuthor);
         return authorDTO;
     }
 
@@ -37,41 +35,21 @@ public class AuthorService : IAuthorService
     public async Task<List<AuthorDTO>> GetAllAuthorsAsync()
     {
         var authors = await _authorRepository.GetAllAuthorsAsync();
-
-        var authorDTOs = new List<AuthorDTO>();
-
-        foreach (var author in authors)
-        {
-            var authorDTO = new AuthorDTO { Id = author.Id, Name = author.Name, };
-
-            authorDTOs.Add(authorDTO);
-        }
-
+        var authorDTOs = _mapper.Map<List<AuthorDTO>>(authors);
         return authorDTOs;
     }
 
     public async Task<AuthorDTO> GetAuthorByIdAsync(int id)
     {
         var author = await _authorRepository.GetAuthorByIdAsync(id);
-
-        var authorDTO = new AuthorDTO { Id = author.Id, Name = author.Name, };
-
+        var authorDTO = _mapper.Map<AuthorDTO>(author);
         return authorDTO;
     }
 
     public async Task<List<AuthorDTO>> GetAuthorsByNameAsync(string name)
     {
         var authors = await _authorRepository.GetAuthorsByNameAsync(name);
-
-        var authorDTOs = new List<AuthorDTO>();
-
-        foreach (var author in authors)
-        {
-            var authorDTO = new AuthorDTO { Id = author.Id, Name = author.Name, };
-
-            authorDTOs.Add(authorDTO);
-        }
-
+        var authorDTOs = _mapper.Map<List<AuthorDTO>>(authors);
         return authorDTOs;
     }
 
