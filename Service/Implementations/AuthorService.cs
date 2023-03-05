@@ -1,39 +1,82 @@
 using library.DTOs;
 using library.Models;
+using library.Repositories.Interfaces;
 using library.Service.Interfaces;
 
 namespace library.Service.Implementations;
 
-
 public class AuthorService : IAuthorService
 {
+    // Will implement unit of work pattern and auto mapper in the future
+
+
+    private readonly IAuthorRepository _authorRepository;
+
     public Task<AuthorDTO> CreateAuthorAsync(Author author)
     {
-        throw new NotImplementedException();
+        return CreateAuthorAsync(author, _authorRepository);
     }
 
-    public Task DeleteAuthorAsync(Author author)
+    public async Task<AuthorDTO> CreateAuthorAsync(
+        Author author,
+        IAuthorRepository _authorRepository
+    )
     {
-        throw new NotImplementedException();
+        var createdAuthor = await _authorRepository.CreateAuthorAsync(author);
+
+        var authorDTO = new AuthorDTO { Id = createdAuthor.Id, Name = createdAuthor.Name, };
+
+        return authorDTO;
     }
 
-    public Task<List<AuthorDTO>> GetAllAuthorsAsync()
+    public async Task DeleteAuthorAsync(Author author)
     {
-        throw new NotImplementedException();
+        await _authorRepository.DeleteAuthorAsync(author);
     }
 
-    public Task<AuthorDTO> GetAuthorByIdAsync(int id)
+    public async Task<List<AuthorDTO>> GetAllAuthorsAsync()
     {
-        throw new NotImplementedException();
+        var authors = await _authorRepository.GetAllAuthorsAsync();
+
+        var authorDTOs = new List<AuthorDTO>();
+
+        foreach (var author in authors)
+        {
+            var authorDTO = new AuthorDTO { Id = author.Id, Name = author.Name, };
+
+            authorDTOs.Add(authorDTO);
+        }
+
+        return authorDTOs;
     }
 
-    public Task<List<AuthorDTO>> GetAuthorsByNameAsync(string name)
+    public async Task<AuthorDTO> GetAuthorByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var author = await _authorRepository.GetAuthorByIdAsync(id);
+
+        var authorDTO = new AuthorDTO { Id = author.Id, Name = author.Name, };
+
+        return authorDTO;
     }
 
-    public Task UpdateAuthorAsync(Author author)
+    public async Task<List<AuthorDTO>> GetAuthorsByNameAsync(string name)
     {
-        throw new NotImplementedException();
+        var authors = await _authorRepository.GetAuthorsByNameAsync(name);
+
+        var authorDTOs = new List<AuthorDTO>();
+
+        foreach (var author in authors)
+        {
+            var authorDTO = new AuthorDTO { Id = author.Id, Name = author.Name, };
+
+            authorDTOs.Add(authorDTO);
+        }
+
+        return authorDTOs;
+    }
+
+    public async Task UpdateAuthorAsync(Author author)
+    {
+        await _authorRepository.UpdateAuthorAsync(author);
     }
 }

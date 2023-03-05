@@ -1,39 +1,90 @@
 using library.DTOs;
 using library.Models;
+using library.Repositories.Interfaces;
 using library.Service.Interfaces;
 
 namespace library.Service.Implementations;
 
-
 public class UserService : IUserService
 {
-    public Task<UserDTO> CreateUserAsync(User user)
+    // Will implement unit of work pattern and auto mapper in the future
+    private readonly IUserRepository _userRepository;
+
+    public UserService(IUserRepository userRepository)
     {
-        throw new NotImplementedException();
+        _userRepository = userRepository;
     }
 
-    public Task DeleteUserAsync(User user)
+    public async Task<UserDTO> CreateUserAsync(User user)
     {
-        throw new NotImplementedException();
+        var createdUser = await _userRepository.CreateUserAsync(user);
+
+        var userDTO = new UserDTO
+        {
+            Id = createdUser.Id,
+            Email = createdUser.Email,
+            Name = createdUser.Name,
+        };
+
+        return userDTO;
     }
 
-    public Task<List<UserDTO>> GetAllUsersAsync()
+    public async Task DeleteUserAsync(User user)
     {
-        throw new NotImplementedException();
+        await _userRepository.DeleteUserAsync(user);
     }
 
-    public Task<UserDTO> GetUserByEmailAsync(string email)
+    public async Task<List<UserDTO>> GetAllUsersAsync()
     {
-        throw new NotImplementedException();
+        var users = await _userRepository.GetAllUsersAsync();
+
+        var userDTOs = new List<UserDTO>();
+
+        foreach (var user in users)
+        {
+            var userDTO = new UserDTO
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Name = user.Name,
+            };
+
+            userDTOs.Add(userDTO);
+        }
+
+        return userDTOs;
     }
 
-    public Task<UserDTO> GetUserByIdAsync(int id)
+    public async Task<UserDTO> GetUserByEmailAsync(string email)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.GetUserByEmailAsync(email);
+
+        var userDTO = new UserDTO
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Name = user.Name,
+        };
+
+        return userDTO;
     }
 
-    public Task UpdateUserAsync(User user)
+    public async Task<UserDTO> GetUserByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var user = await _userRepository.GetUserByIdAsync(id);
+
+        var userDTO = new UserDTO
+        {
+            Id = user.Id,
+            Email = user.Email,
+            Name = user.Name,
+        };
+
+        return userDTO;
+    }
+
+    public async Task UpdateUserAsync(User user)
+    {
+        await _userRepository.UpdateUserAsync(user);
     }
 }

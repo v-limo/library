@@ -1,44 +1,120 @@
 using library.DTOs;
 using library.Models;
+using library.Repositories.Interfaces;
 using library.Service.Interfaces;
 
 namespace library.Service.Implementations;
 
-
 public class BookService : IBookService
 {
-    public Task<BookDTO> CreateBookAsync(Book book)
+    // Will implement unit of work pattern and auto mapper in the future
+    private readonly IBookRepository _bookRepository;
+
+    public BookService(IBookRepository bookRepository)
     {
-        throw new NotImplementedException();
+        _bookRepository = bookRepository;
     }
 
-    public Task DeleteBookAsync(Book book)
+    public async Task<BookDTO> CreateBookAsync(Book book)
     {
-        throw new NotImplementedException();
+        var createdBook = await _bookRepository.CreateBookAsync(book);
+
+        var bookDTO = new BookDTO
+        {
+            Id = createdBook.Id,
+            Title = createdBook.Title,
+            AuthorId = createdBook.AuthorId,
+            UserId = createdBook.UserId,
+        };
+
+        return bookDTO;
     }
 
-    public Task<List<BookDTO>> GetAllBooksAsync()
+    public async Task DeleteBookAsync(Book book)
     {
-        throw new NotImplementedException();
+        await _bookRepository.DeleteBookAsync(book);
     }
 
-    public Task<BookDTO> GetBookByIdAsync(int id)
+    public async Task<List<BookDTO>> GetAllBooksAsync()
     {
-        throw new NotImplementedException();
+        var books = await _bookRepository.GetAllBooksAsync();
+
+        var bookDTOs = new List<BookDTO>();
+
+        foreach (var book in books)
+        {
+            var bookDTO = new BookDTO
+            {
+                Id = book.Id,
+                Title = book.Title,
+                AuthorId = book.AuthorId,
+                UserId = book.UserId,
+            };
+
+            bookDTOs.Add(bookDTO);
+        }
+        return bookDTOs;
     }
 
-    public Task<List<BookDTO>> GetBooksByAuthorIdAsync(int authorId)
+    public async Task<BookDTO> GetBookByIdAsync(int id)
     {
-        throw new NotImplementedException();
+        var book = await _bookRepository.GetBookByIdAsync(id);
+
+        var bookDTO = new BookDTO
+        {
+            Id = book.Id,
+            Title = book.Title,
+            AuthorId = book.AuthorId,
+            UserId = book.UserId,
+        };
+
+        return bookDTO;
     }
 
-    public Task<List<BookDTO>> GetBooksByUserIdAsync(int userId)
+    public async Task<List<BookDTO>> GetBooksByAuthorIdAsync(int authorId)
     {
-        throw new NotImplementedException();
+        var books = await _bookRepository.GetBooksByAuthorIdAsync(authorId);
+
+        var bookDTOs = new List<BookDTO>();
+
+        foreach (var book in books)
+        {
+            var bookDTO = new BookDTO
+            {
+                Id = book.Id,
+                Title = book.Title,
+                AuthorId = book.AuthorId,
+                UserId = book.UserId,
+            };
+
+            bookDTOs.Add(bookDTO);
+        }
+        return bookDTOs;
     }
 
-    public Task UpdateBookAsync(Book book)
+    public async Task<List<BookDTO>> GetBooksByUserIdAsync(int userId)
     {
-        throw new NotImplementedException();
+        var books = await _bookRepository.GetBooksByUserIdAsync(userId);
+
+        var bookDTOs = new List<BookDTO>();
+
+        foreach (var book in books)
+        {
+            var bookDTO = new BookDTO
+            {
+                Id = book.Id,
+                Title = book.Title,
+                AuthorId = book.AuthorId,
+                UserId = book.UserId,
+            };
+
+            bookDTOs.Add(bookDTO);
+        }
+        return bookDTOs;
+    }
+
+    public async Task UpdateBookAsync(Book book)
+    {
+        await _bookRepository.UpdateBookAsync(book);
     }
 }
