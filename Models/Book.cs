@@ -11,7 +11,7 @@ public class Book
     public string Title { get; set; } = String.Empty;
     public string Description { get; set; } = String.Empty;
     public int AuthorId { get; set; }
-    public virtual Author Author { get; set; }
+    public  Author Author { get; set; }
     public int UserId { get; set; }
-    public virtual User User { get; set; } = null!;
+    public  User User { get; set; } = null!;
 }
