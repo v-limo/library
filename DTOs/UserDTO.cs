@@ -1,4 +1,4 @@
-namespace Name;
+namespace library.DTOs;
 
 public class UserDTO
 {
