@@ -27,12 +27,12 @@ public class UserRepository : IUserRepository
         return await _DBcontext.Users.ToListAsync();
     }
 
-    public async Task<User?> GetUserByEmailAsync(string email)
+    public async Task<User> GetUserByEmailAsync(string email)
     {
         return await _DBcontext.Users.FirstOrDefaultAsync(u => u.Email == email);
     }
 
-    public async Task<User?> GetUserByIdAsync(int id)
+    public async Task<User> GetUserByIdAsync(int id)
     {
         return await _DBcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
     }
