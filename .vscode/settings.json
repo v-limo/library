@@ -1,0 +1,33 @@
+{
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "askForPassword": true,
+      "driver": "PostgreSQL",
+      "name": "postgres",
+      "database": "postgres",
+      "username": "postgres"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "askForPassword": true,
+      "driver": "PostgreSQL",
+      "name": "vincentlimo",
+      "database": "vincentlimo",
+      "username": "vincentlimo"
+    },
+    {
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 5432,
+      "driver": "PostgreSQL",
+      "name": "user2",
+      "database": "librarydb",
+      "username": "user2"
+    }
+  ]
+}

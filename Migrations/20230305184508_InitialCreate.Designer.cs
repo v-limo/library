@@ -11,8 +11,8 @@ using library.Data;
 namespace library.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230305182837_psq_migrations")]
-    partial class psq_migrations
+    [Migration("20230305184508_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
