@@ -2,50 +2,57 @@ namespace library.Repositories.Implementations;
 
 public class BookRepository : IBookRepository
 {
-    private readonly ApplicationDbContext _DBcontext;
+    private readonly ApplicationDbContext _dBcontext;
 
-    public BookRepository(ApplicationDbContext DBcontext)
+    public BookRepository(ApplicationDbContext dBcontext)
     {
-        _DBcontext = DBcontext;
+        _dBcontext = dBcontext;
     }
 
-    public async Task<Book> CreateBookAsync(Book book)
+    public async Task<IEnumerable<Book>> GetAll()
     {
-        _DBcontext.Books.Add(book);
-        await _DBcontext.SaveChangesAsync();
-        // Return the book with the ID, Book from the DB
+        var books = await _dBcontext.Books.ToListAsync();
+        return books;
+    }
+
+    public async Task<Book> GetById(int id)
+    {
+        var book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
         return book;
     }
 
-    public async Task DeleteBookAsync(Book book)
+    public async Task<Book> Create(Book entity)
     {
-        _DBcontext.Books.Remove(book);
-        await _DBcontext.SaveChangesAsync();
+        var book = await _dBcontext.Books.AddAsync(entity);
+        _ = await _dBcontext.SaveChangesAsync();
+        return book.Entity;
     }
 
-    public async Task<List<Book>> GetAllBooksAsync()
+    public async Task<Book> Update(Book entity)
     {
-        return await _DBcontext.Books.ToListAsync();
+        var book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == entity.Id);
+        if (book == null)
+        {
+            return null;
+        }
+
+        book.Id = entity.Id;
+        book.Title = entity.Title;
+        book.Author = entity.Author;
+        book.AuthorId = entity.AuthorId;
+        _ = await _dBcontext.SaveChangesAsync();
+        return book;
     }
 
-    public async Task<Book> GetBookByIdAsync(int id)
+    public async Task<Book> Delete(int id)
     {
-        return await _DBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
-    }
-
-    public async Task<List<Book>> GetBooksByAuthorIdAsync(int authorId)
-    {
-        return await _DBcontext.Books.Where(b => b.AuthorId == authorId).ToListAsync();
-    }
-
-    public async Task<List<Book>> GetBooksByUserIdAsync(int userId)
-    {
-        return await _DBcontext.Books.Where(b => b.UserId == userId).ToListAsync();
-    }
-
-    public async Task UpdateBookAsync(Book book)
-    {
-        _DBcontext.Books.Update(book);
-        await _DBcontext.SaveChangesAsync();
+        var book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
+        if (book == null)
+        {
+            return null;
+        }
+        _ = _dBcontext.Books.Remove(book);
+        _ = await _dBcontext.SaveChangesAsync();
+        return book;
     }
 }

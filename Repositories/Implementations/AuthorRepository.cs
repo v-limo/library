@@ -1,52 +1,59 @@
-namespace library.Repositories.Implementations;
-
-public class AuthorRepository : IAuthorRepository
+namespace library.Repositories.Implementations
 {
-    private readonly ApplicationDbContext _DBcontext;
-
-    public AuthorRepository(ApplicationDbContext DBcontext)
+    public class AuthorRepository : IAuthorRepository
     {
-        _DBcontext = DBcontext;
-    }
+        private readonly ApplicationDbContext _dBcontext;
 
-    public async Task<Author> CreateAuthorAsync(Author author)
-    {
-        _DBcontext.Authors.Add(author);
-        await _DBcontext.SaveChangesAsync();
-        return author;
-    }
-
-    public async Task DeleteAuthorAsync(Author author)
-    {
-        _DBcontext.Authors.Remove(author);
-        await _DBcontext.SaveChangesAsync();
-    }
-
-    public async Task<List<Author>> GetAllAuthorsAsync()
-    {
-        return await _DBcontext.Authors.ToListAsync();
-    }
-
-    public async Task<Author> GetAuthorByIdAsync(int id)
-    {
-        // Could be null, will be handled by the controller
-        return await _DBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
-    }
-
-    public async Task<List<Author>> GetAuthorsByNameAsync(string name)
-    {
-        var authors = await _DBcontext.Authors.Where(a => a.Name.Contains(name)).ToListAsync();
-
-        if (authors == null)
+        public AuthorRepository(ApplicationDbContext dBcontext)
         {
-            throw new Exception("No authors found");
+            _dBcontext = dBcontext;
         }
-        return authors;
+
+        public async Task<IEnumerable<Author>> GetAll()
+        {
+            List<Author> authors = await _dBcontext.Authors.ToListAsync();
+            return authors;
+        }
+
+        public async Task<Author> GetById(int id)
+        {
+            Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            return author;
+        }
+
+        public async Task<Author> Create(Author entity)
+        {
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Author> author =
+                await _dBcontext.Authors.AddAsync(entity);
+            _ = await _dBcontext.SaveChangesAsync();
+            return author.Entity;
+        }
+
+        public async Task<Author> Update(Author entity)
+        {
+            Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == entity.Id);
+            if (author == null)
+            {
+                return null;
+            }
+
+            author.Id = entity.Id;
+            author.Name = entity.Name;
+            author.Books = entity.Books;
+            _ = await _dBcontext.SaveChangesAsync();
+            return author;
+        }
+
+        public async Task<Author> Delete(int id)
+        {
+            Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            if (author == null)
+            {
+                return null;
+            }
+            _ = _dBcontext.Authors.Remove(author);
+            return author;
+        }
     }
 
-    public async Task UpdateAuthorAsync(Author author)
-    {
-        _DBcontext.Authors.Update(author);
-        await _DBcontext.SaveChangesAsync();
-    }
 }
