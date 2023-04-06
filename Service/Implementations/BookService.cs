@@ -1,59 +1,67 @@
-namespace library.Service.Implementations;
-
-public class BookService : IBookService
+namespace library.Service.Implementations
 {
-    // Will implement unit of work pattern and auto mapper in the future
-    private readonly IBookRepository _bookRepository;
-    private readonly IMapper _mapper;
-
-    public BookService(IBookRepository bookRepository, IMapper mapper)
+    public class BookService : IBookService
     {
-        _bookRepository = bookRepository;
-        _mapper = mapper;
-    }
+        // Will implement unit of work pattern and auto mapper in the future
+        private readonly IBookRepository _bookRepository;
+        private readonly IMapper _mapper;
 
-    public async Task<BookDTO> CreateBookAsync(Book book)
-    {
-        var createdBook = await _bookRepository.CreateBookAsync(book);
-        var bookDTO = _mapper.Map<BookDTO>(createdBook);
-        return bookDTO;
-    }
+        public BookService(IBookRepository bookRepository, IMapper mapper)
+        {
+            _bookRepository = bookRepository;
+            _mapper = mapper;
+        }
 
-    public async Task DeleteBookAsync(Book book)
-    {
-        await _bookRepository.DeleteBookAsync(book);
-    }
+        public async Task<BookDTO> CreateBookAsync(Book book)
+        {
+            Book createdBook = await _bookRepository.CreateAsync(book);
+            BookDTO bookDTO = _mapper.Map<BookDTO>(createdBook);
+            return bookDTO;
+        }
 
-    public async Task<List<BookDTO>> GetAllBooksAsync()
-    {
-        var books = await _bookRepository.GetAllBooksAsync();
-        var bookDTOs = _mapper.Map<List<BookDTO>>(books);
-        return bookDTOs;
-    }
+        public async Task DeleteBookAsync(int id)
+        {
+            _ = await _bookRepository.DeleteAsync(id);
+        }
 
-    public async Task<BookDTO> GetBookByIdAsync(int id)
-    {
-        var book = await _bookRepository.GetBookByIdAsync(id);
-        var bookDTO = _mapper.Map<BookDTO>(book);
-        return bookDTO;
-    }
+        public async Task<List<BookDTO>> GetAllBooksAsync()
+        {
+            IEnumerable<Book> books = await _bookRepository.GetAllAsync();
+            List<BookDTO> bookDTOs = _mapper.Map<List<BookDTO>>(books);
+            return bookDTOs;
+        }
 
-    public async Task<List<BookDTO>> GetBooksByAuthorIdAsync(int authorId)
-    {
-        var books = await _bookRepository.GetBooksByAuthorIdAsync(authorId);
-        var bookDTOs = _mapper.Map<List<BookDTO>>(books);
-        return bookDTOs;
-    }
+        public async Task<BookDTO> GetAuthorByEmailAsync(string email)
+        {
+            Book book = await _bookRepository.GetAuthorByEmailAsync(email);
+            BookDTO bookDTO = _mapper.Map<BookDTO>(book);
+            return bookDTO;
+        }
 
-    public async Task<List<BookDTO>> GetBooksByUserIdAsync(int userId)
-    {
-        var books = await _bookRepository.GetBooksByUserIdAsync(userId);
-        var bookDTOs = _mapper.Map<List<BookDTO>>(books);
-        return bookDTOs;
-    }
+        public async Task<BookDTO> GetBookByIdAsync(int id)
+        {
+            Book book = await _bookRepository.GetByIdAsync(id);
+            BookDTO bookDTO = _mapper.Map<BookDTO>(book);
+            return bookDTO;
+        }
 
-    public async Task UpdateBookAsync(Book book)
-    {
-        await _bookRepository.UpdateBookAsync(book);
+        public async Task<List<BookDTO>> GetBooksByAuthorIdAsync(int authorId)
+        {
+            List<Book> books = await _bookRepository.GetBooksByAuthorIdAsync(authorId);
+            List<BookDTO> bookDTOs = _mapper.Map<List<BookDTO>>(books);
+            return bookDTOs;
+        }
+
+        public async Task<List<BookDTO>> GetBooksByUserIdAsync(int userId)
+        {
+            List<Book> books = await _bookRepository.GetBooksByUserIdAsync(userId);
+            List<BookDTO> bookDTOs = _mapper.Map<List<BookDTO>>(books);
+            return bookDTOs;
+        }
+
+        public async Task UpdateBookAsync(Book book)
+        {
+            _ = await _bookRepository.UpdateAsync(book);
+        }
     }
 }

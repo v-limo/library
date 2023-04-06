@@ -9,25 +9,25 @@ public class UserRepository : IUserRepository
         _dBcontext = dBcontext;
     }
 
-    public async Task<IEnumerable<User>> GetAll()
+    public async Task<IEnumerable<User>> GetAllAsync()
     {
         var users = await _dBcontext.Users.ToListAsync();
         return users;
     }
-    public async Task<User> GetById(int id)
+    public async Task<User> GetByIdAsync(int id)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
         return user;
     }
 
-    public async Task<User> Create(User entity)
+    public async Task<User> CreateAsync(User entity)
     {
         var user = await _dBcontext.Users.AddAsync(entity);
         _ = await _dBcontext.SaveChangesAsync();
         return user.Entity;
     }
 
-    public async Task<User> Update(User entity)
+    public async Task<User> UpdateAsync(User entity)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Id == entity.Id);
         if (user == null)
@@ -41,7 +41,7 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> Delete(int id)
+    public async Task<User> DeleteAsync(int id)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
         if (user == null)
@@ -50,6 +50,12 @@ public class UserRepository : IUserRepository
         }
         _ = _dBcontext.Users.Remove(user);
         _ = await _dBcontext.SaveChangesAsync();
+        return user;
+    }
+
+    public async Task<User> GetUserByEmailAsync(string email)
+    {
+        var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Email == email);
         return user;
     }
 }

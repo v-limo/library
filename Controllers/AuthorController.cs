@@ -33,16 +33,16 @@ public class AuthorController : ControllerBase
         return Ok(Author);
     }
 
-    // [HttpGet("{email}")]
-    // public async Task<ActionResult<AuthorDTO>> GetAuthorByEmailAsync(string email)
-    // {
-    //     var Author = await _authorService.GetAuthorByEmailAsync(email);
-    //     if (Author == null)
-    //     {
-    //         return NotFound($"Author with email {email} not found.");
-    //     }
-    //     return Ok(Author);
-    // }
+    [HttpGet("{email}")]
+    public async Task<ActionResult<AuthorDTO>> GetAuthorByEmailAsync(string email)
+    {
+        var Author = await _authorService.GetAuthorByEmailAsync(email);
+        if (Author == null)
+        {
+            return NotFound($"Author with email {email} not found.");
+        }
+        return Ok(Author);
+    }
 
     [HttpPost]
     public async Task<ActionResult<AuthorDTO>> CreateAuthorAsync([FromBody] Author Author)
@@ -66,14 +66,19 @@ public class AuthorController : ControllerBase
         }
 
         await _authorService.UpdateAuthorAsync(Author);
-        // change service to return Author object
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAuthorAsync(int id)
     {
-        // await _AuthorService.DeleteAuthorAsync(id);
+        var Author = await _authorService.GetAuthorByIdAsync(id);
+        if (Author == null)
+        {
+            return NotFound($"Author with id {id} not found.");
+        }
+
+        await _authorService.DeleteAuthorAsync(id);
         return NoContent();
     }
 }

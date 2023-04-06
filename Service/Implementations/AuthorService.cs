@@ -22,26 +22,27 @@ public class AuthorService : IAuthorService
         IAuthorRepository _authorRepository
     )
     {
-        var createdAuthor = await _authorRepository.CreateAuthorAsync(author);
+        var createdAuthor = await _authorRepository.CreateAsync(author);
         var authorDTO = _mapper.Map<AuthorDTO>(createdAuthor);
         return authorDTO;
     }
 
-    public async Task DeleteAuthorAsync(Author author)
+    public Task DeleteAuthorAsync(int id)
     {
-        await _authorRepository.DeleteAuthorAsync(author);
+        return _authorRepository.DeleteAsync(id);
     }
+
 
     public async Task<List<AuthorDTO>> GetAllAuthorsAsync()
     {
-        var authors = await _authorRepository.GetAllAuthorsAsync();
+        var authors = await _authorRepository.GetAllAsync();
         var authorDTOs = _mapper.Map<List<AuthorDTO>>(authors);
         return authorDTOs;
     }
 
     public async Task<AuthorDTO> GetAuthorByIdAsync(int id)
     {
-        var author = await _authorRepository.GetAuthorByIdAsync(id);
+        var author = await _authorRepository.GetByIdAsync(id);
         var authorDTO = _mapper.Map<AuthorDTO>(author);
         return authorDTO;
     }
@@ -53,8 +54,10 @@ public class AuthorService : IAuthorService
         return authorDTOs;
     }
 
-    public async Task UpdateAuthorAsync(Author author)
+    public async Task<AuthorDTO> UpdateAuthorAsync(Author author)
     {
-        await _authorRepository.UpdateAuthorAsync(author);
+        var updatedAuthor = await _authorRepository.UpdateAsync(author);
+        var authorDTO = _mapper.Map<AuthorDTO>(updatedAuthor);
+        return authorDTO;
     }
 }

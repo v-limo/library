@@ -9,19 +9,19 @@ namespace library.Repositories.Implementations
             _dBcontext = dBcontext;
         }
 
-        public async Task<IEnumerable<Author>> GetAll()
+        public async Task<IEnumerable<Author>> GetAllAsync()
         {
             List<Author> authors = await _dBcontext.Authors.ToListAsync();
             return authors;
         }
 
-        public async Task<Author> GetById(int id)
+        public async Task<Author> GetByIdAsync(int id)
         {
             Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
             return author;
         }
 
-        public async Task<Author> Create(Author entity)
+        public async Task<Author> CreateAsync(Author entity)
         {
             Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Author> author =
                 await _dBcontext.Authors.AddAsync(entity);
@@ -29,7 +29,7 @@ namespace library.Repositories.Implementations
             return author.Entity;
         }
 
-        public async Task<Author> Update(Author entity)
+        public async Task<Author> UpdateAsync(Author entity)
         {
             Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == entity.Id);
             if (author == null)
@@ -44,7 +44,7 @@ namespace library.Repositories.Implementations
             return author;
         }
 
-        public async Task<Author> Delete(int id)
+        public async Task<Author> DeleteAsync(int id)
         {
             Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
             if (author == null)
@@ -54,6 +54,11 @@ namespace library.Repositories.Implementations
             _ = _dBcontext.Authors.Remove(author);
             return author;
         }
-    }
 
+        public async Task<List<Author>> GetAuthorsByNameAsync(string name)
+        {
+            List<Author> authors = await _dBcontext.Authors.Where(a => a.Name.Contains(name)).ToListAsync();
+            return authors;
+        }
+    }
 }
