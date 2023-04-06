@@ -73,7 +73,7 @@ public class BookController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteBookAsync(int id)
     {
-        // await _bookService.DeleteBookAsync(id);
+        await _bookService.DeleteBookAsync(id);
         return NoContent();
     }
 }

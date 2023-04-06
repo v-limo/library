@@ -40,6 +40,13 @@ public class AuthorService : IAuthorService
         return authorDTOs;
     }
 
+    public async Task<AuthorDTO> GetAuthorByEmailAsync(string email)
+    {
+        var author = await _authorRepository.GetAuthorByEmailAsync(email);
+        var authorDTO = _mapper.Map<AuthorDTO>(author);
+        return authorDTO;
+    }
+
     public async Task<AuthorDTO> GetAuthorByIdAsync(int id)
     {
         var author = await _authorRepository.GetByIdAsync(id);

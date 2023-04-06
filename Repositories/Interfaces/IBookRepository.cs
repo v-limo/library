@@ -4,7 +4,6 @@ namespace library.Repositories.Interfaces
     {
         Task<List<Book>> GetBooksByAuthorIdAsync(int authorId);
         Task<List<Book>> GetBooksByUserIdAsync(int userId);
-
         Task<Book> GetAuthorByEmailAsync(string email);
     }
 }

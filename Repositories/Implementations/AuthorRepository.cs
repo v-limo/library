@@ -60,5 +60,11 @@ namespace library.Repositories.Implementations
             List<Author> authors = await _dBcontext.Authors.Where(a => a.Name.Contains(name)).ToListAsync();
             return authors;
         }
+
+        public Task<Author> GetAuthorByEmailAsync(string email)
+        {
+            var author = _dBcontext.Authors.FirstOrDefaultAsync(a => a.Email == email);
+            return author;
+        }
     }
 }

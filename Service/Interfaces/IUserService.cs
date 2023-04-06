@@ -7,7 +7,6 @@ namespace library.Service.Interfaces
         Task<UserDTO> GetUserByEmailAsync(string email);
         Task<UserDTO> CreateUserAsync(User user);
         Task UpdateUserAsync(User user);
-
         Task DeleteUserAsync(int id);
     }
 }

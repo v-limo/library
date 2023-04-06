@@ -8,5 +8,6 @@ namespace library.Service.Interfaces
         Task<AuthorDTO> GetAuthorByIdAsync(int id);
         Task<List<AuthorDTO>> GetAuthorsByNameAsync(string name);
         Task<AuthorDTO> UpdateAuthorAsync(Author author);
+        Task<AuthorDTO> GetAuthorByEmailAsync(string email);
     }
 }
