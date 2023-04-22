@@ -6,6 +6,7 @@ global using library.Repositories.Implementations;
 global using library.Repositories.Interfaces;
 global using library.Service.Implementations;
 global using library.Service.Interfaces;
+global using Microsoft.AspNetCore.Mvc;
 global using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

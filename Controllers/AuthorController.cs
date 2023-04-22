@@ -1,8 +1,4 @@
-using library.DTOs;
-using library.Models;
-using library.Service.Interfaces;
-
-using Microsoft.AspNetCore.Mvc;
+namespace library.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -18,30 +14,22 @@ public class AuthorController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthorsAsync()
     {
-        var Authors = await _authorService.GetAllAuthorsAsync();
+        List<AuthorDTO> Authors = await _authorService.GetAllAuthorsAsync();
         return Ok(Authors);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<AuthorDTO>> GetAuthorByIdAsync(int id)
     {
-        var Author = await _authorService.GetAuthorByIdAsync(id);
-        if (Author == null)
-        {
-            return NotFound($"Author with id {id} not found.");
-        }
-        return Ok(Author);
+        AuthorDTO Author = await _authorService.GetAuthorByIdAsync(id);
+        return Author == null ? (ActionResult<AuthorDTO>)NotFound($"Author with id {id} not found.") : (ActionResult<AuthorDTO>)Ok(Author);
     }
 
     [HttpGet("{email}")]
     public async Task<ActionResult<AuthorDTO>> GetAuthorByEmailAsync(string email)
     {
-        var Author = await _authorService.GetAuthorByEmailAsync(email);
-        if (Author == null)
-        {
-            return NotFound($"Author with email {email} not found.");
-        }
-        return Ok(Author);
+        AuthorDTO Author = await _authorService.GetAuthorByEmailAsync(email);
+        return Author == null ? (ActionResult<AuthorDTO>)NotFound($"Author with email {email} not found.") : (ActionResult<AuthorDTO>)Ok(Author);
     }
 
     [HttpPost]
@@ -52,7 +40,7 @@ public class AuthorController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        var newAuthor = await _authorService.CreateAuthorAsync(Author);
+        AuthorDTO newAuthor = await _authorService.CreateAuthorAsync(Author);
 
         return CreatedAtAction(nameof(GetAuthorByIdAsync), new { id = newAuthor.Id }, newAuthor);
     }
@@ -65,14 +53,14 @@ public class AuthorController : ControllerBase
             return BadRequest(ModelState);
         }
 
-        await _authorService.UpdateAuthorAsync(Author);
+        _ = await _authorService.UpdateAuthorAsync(Author);
         return NoContent();
     }
 
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteAuthorAsync(int id)
     {
-        var Author = await _authorService.GetAuthorByIdAsync(id);
+        AuthorDTO Author = await _authorService.GetAuthorByIdAsync(id);
         if (Author == null)
         {
             return NotFound($"Author with id {id} not found.");
