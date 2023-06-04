@@ -12,6 +12,7 @@ public class BookController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<BookDTO>>> GetAllBooksAsync()
     {
         var Books = await _bookService.GetAllBooksAsync();
@@ -19,6 +20,8 @@ public class BookController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<BookDTO>> GetBookByIdAsync(int id)
     {
         var Book = await _bookService.GetBookByIdAsync(id);
@@ -30,6 +33,8 @@ public class BookController : ControllerBase
     }
 
     // [HttpGet("{email}")]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status404NotFound)]
     // public async Task<ActionResult<BookDTO>> GetBookByEmailAsync(string email)
     // {
     //     var Book = await _bookService.GetBookByEmailAsync(email);
@@ -41,6 +46,8 @@ public class BookController : ControllerBase
     // }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<BookDTO>> CreateBookAsync([FromBody] Book Book)
     {
         if (!ModelState.IsValid)
@@ -54,6 +61,8 @@ public class BookController : ControllerBase
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<BookDTO>> UpdateBookAsync([FromBody] Book Book)
     {
         if (!ModelState.IsValid)
@@ -67,8 +76,15 @@ public class BookController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> DeleteBookAsync(int id)
     {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
         await _bookService.DeleteBookAsync(id);
         return NoContent();
     }

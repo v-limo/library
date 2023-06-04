@@ -12,6 +12,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<UserDTO>>> GetAllUsersAsync()
     {
         var users = await _userService.GetAllUsersAsync();
@@ -19,6 +20,8 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserDTO>> GetUserByIdAsync(int id)
     {
         var user = await _userService.GetUserByIdAsync(id);
@@ -30,6 +33,8 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{email}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserDTO>> GetUserByEmailAsync(string email)
     {
         var user = await _userService.GetUserByEmailAsync(email);
@@ -41,6 +46,8 @@ public class UserController : ControllerBase
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserDTO>> CreateUserAsync([FromBody] User user)
     {
         if (!ModelState.IsValid)
@@ -54,6 +61,8 @@ public class UserController : ControllerBase
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<UserDTO>> UpdateUserAsync([FromBody] User user)
     {
         if (!ModelState.IsValid)
@@ -67,8 +76,14 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> DeleteUserAsync(int id)
     {
+      if (!ModelState.IsValid)
+      {
+        return BadRequest(ModelState);
+      }
         await _userService.DeleteUserAsync(id);
         return NoContent();
     }
