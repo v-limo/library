@@ -12,6 +12,7 @@ public class AuthorController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAllAuthorsAsync()
     {
         List<AuthorDTO> Authors = await _authorService.GetAllAuthorsAsync();
@@ -19,20 +20,30 @@ public class AuthorController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<AuthorDTO>> GetAuthorByIdAsync(int id)
     {
         AuthorDTO Author = await _authorService.GetAuthorByIdAsync(id);
-        return Author == null ? (ActionResult<AuthorDTO>)NotFound($"Author with id {id} not found.") : (ActionResult<AuthorDTO>)Ok(Author);
+        return Author == null
+            ? (ActionResult<AuthorDTO>)NotFound($"Author with id {id} not found.")
+            : (ActionResult<AuthorDTO>)Ok(Author);
     }
 
     [HttpGet("{email}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<AuthorDTO>> GetAuthorByEmailAsync(string email)
     {
         AuthorDTO Author = await _authorService.GetAuthorByEmailAsync(email);
-        return Author == null ? (ActionResult<AuthorDTO>)NotFound($"Author with email {email} not found.") : (ActionResult<AuthorDTO>)Ok(Author);
+        return Author == null
+            ? (ActionResult<AuthorDTO>)NotFound($"Author with email {email} not found.")
+            : (ActionResult<AuthorDTO>)Ok(Author);
     }
 
     [HttpPost]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AuthorDTO>> CreateAuthorAsync([FromBody] Author Author)
     {
         if (!ModelState.IsValid)
@@ -46,6 +57,8 @@ public class AuthorController : ControllerBase
     }
 
     [HttpPut]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AuthorDTO>> UpdateAuthorAsync([FromBody] Author Author)
     {
         if (!ModelState.IsValid)
@@ -58,6 +71,8 @@ public class AuthorController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> DeleteAuthorAsync(int id)
     {
         AuthorDTO Author = await _authorService.GetAuthorByIdAsync(id);
