@@ -18,11 +18,13 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
+builder.Services.AddRouting(options => options.LowercaseUrls = true);
+
 // add db context
 builder.Services.AddDbContext<ApplicationDbContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
-
 
 // inject services
 builder.Services.AddScoped<IBookService, BookService>();

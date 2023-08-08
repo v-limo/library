@@ -29,5 +29,7 @@
       "database": "librarydb",
       "username": "user2"
     }
-  ]
+  ],
+  "dotnet.defaultSolution": "library.sln",
+  "githubPullRequests.ignoredPullRequestBranches": ["main"]
 }
