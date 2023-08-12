@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace library.Validators;
+namespace Application.API.Validators;
 
 public class BookValidator : AbstractValidator<Book>
 {

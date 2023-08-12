@@ -4,14 +4,14 @@ global using Microsoft.EntityFrameworkCore;
 global using FluentValidation;
 global using FluentValidation.AspNetCore;
 
-global using library.Data;
-global using library.DTOs;
-global using library.Models;
-global using library.Repositories.Implementations;
-global using library.Repositories.Interfaces;
-global using library.Service.Implementations;
-global using library.Service.Interfaces;
-global using library.Validators;
+global using Application.API.Data;
+global using Application.API.DTOs;
+global using Application.API.Models;
+global using Application.API.Repositories.Implementations;
+global using Application.API.Repositories.Interfaces;
+global using Application.API.Service.Implementations;
+global using Application.API.Service.Interfaces;
+global using Application.API.Validators;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);

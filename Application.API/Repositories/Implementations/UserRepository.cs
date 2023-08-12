@@ -1,4 +1,4 @@
-namespace library.Repositories.Implementations;
+namespace Application.API.Repositories.Implementations;
 
 public class UserRepository : IUserRepository
 {
@@ -14,6 +14,7 @@ public class UserRepository : IUserRepository
         var users = await _dBcontext.Users.ToListAsync();
         return users;
     }
+
     public async Task<User> GetByIdAsync(int id)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Id == id);

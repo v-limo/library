@@ -1,4 +1,4 @@
-namespace library.Validators;
+namespace Application.API.Validators;
 
 public class UserValidator : AbstractValidator<User>
 {

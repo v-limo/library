@@ -1,4 +1,4 @@
-namespace library.Repositories.Implementations
+namespace Application.API.Repositories.Implementations
 {
     public class AuthorRepository : IAuthorRepository
     {

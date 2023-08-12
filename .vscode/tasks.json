@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/library.csproj",
+        "${workspaceFolder}/Application.API.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -19,7 +19,7 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/library.csproj",
+        "${workspaceFolder}/Application.API.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -33,7 +33,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/library.csproj"
+        "${workspaceFolder}/Application.API.csproj"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -42,7 +42,7 @@
       "label": "docker-build: debug",
       "dependsOn": ["build"],
       "dockerBuild": {
-        "tag": "library:dev",
+        "tag": "Application.API:dev",
         "target": "base",
         "dockerfile": "${workspaceFolder}/Application.API/Dockerfile",
         "context": "${workspaceFolder}",
@@ -57,7 +57,7 @@
       "label": "docker-build: release",
       "dependsOn": ["build"],
       "dockerBuild": {
-        "tag": "library:latest",
+        "tag": "Application.API:latest",
         "dockerfile": "${workspaceFolder}/Application.API/Dockerfile",
         "context": "${workspaceFolder}",
         "platform": {

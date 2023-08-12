@@ -1,4 +1,4 @@
-namespace library.Repositories.Interfaces
+namespace Application.API.Repositories.Interfaces
 {
     public interface IBookRepository : IGenericRepository<Book>
     {

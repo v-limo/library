@@ -1,4 +1,4 @@
-namespace library.Service.Interfaces
+namespace Application.API.Service.Interfaces
 {
     public interface IUserService
     {

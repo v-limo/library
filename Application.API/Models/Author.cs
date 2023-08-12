@@ -1,4 +1,4 @@
-namespace library.Models
+namespace Application.API.Models
 {
     public class Author
     {

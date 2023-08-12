@@ -1,4 +1,4 @@
-namespace library.Service.Implementations;
+namespace Application.API.Service.Implementations;
 
 public class AuthorService : IAuthorService
 {
@@ -31,7 +31,6 @@ public class AuthorService : IAuthorService
     {
         return _authorRepository.DeleteAsync(id);
     }
-
 
     public async Task<List<AuthorDTO>> GetAllAuthorsAsync()
     {

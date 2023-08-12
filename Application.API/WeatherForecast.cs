@@ -1,4 +1,4 @@
-namespace library;
+namespace Application.API;
 
 public class WeatherForecast
 {

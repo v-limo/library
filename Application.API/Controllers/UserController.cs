@@ -1,4 +1,4 @@
-namespace library.Controllers;
+namespace Application.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -80,10 +80,10 @@ public class UserController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> DeleteUserAsync(int id)
     {
-      if (!ModelState.IsValid)
-      {
-        return BadRequest(ModelState);
-      }
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
         await _userService.DeleteUserAsync(id);
         return NoContent();
     }

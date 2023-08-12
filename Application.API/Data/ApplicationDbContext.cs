@@ -1,5 +1,5 @@
+namespace Application.API.Data;
 
-namespace library.Data;
 
 public class ApplicationDbContext : DbContext
 {

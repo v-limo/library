@@ -1,4 +1,4 @@
-namespace library.Repositories.Implementations
+namespace Application.API.Repositories.Implementations
 {
     public class BookRepository : IBookRepository
     {
@@ -23,7 +23,8 @@ namespace library.Repositories.Implementations
 
         public async Task<Book> CreateAsync(Book entity)
         {
-            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Book> book = await _dBcontext.Books.AddAsync(entity);
+            Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<Book> book =
+                await _dBcontext.Books.AddAsync(entity);
             _ = await _dBcontext.SaveChangesAsync();
             return book.Entity;
         }

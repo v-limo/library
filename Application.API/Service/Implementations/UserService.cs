@@ -1,4 +1,4 @@
-namespace library.Service.Implementations;
+namespace Application.API.Service.Implementations;
 
 public class UserService : IUserService
 {

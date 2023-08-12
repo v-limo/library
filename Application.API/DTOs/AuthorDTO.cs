@@ -1,4 +1,5 @@
-namespace library.DTOs;
+namespace Application.API.DTOs;
+
 public class AuthorDTO
 {
     public int Id { get; set; }
