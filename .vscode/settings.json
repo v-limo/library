@@ -30,6 +30,6 @@
       "username": "user2"
     }
   ],
-  "dotnet.defaultSolution": "library.sln",
+  "dotnet.defaultSolution": "Application.API/Application.API.sln",
   "githubPullRequests.ignoredPullRequestBranches": ["main"]
 }

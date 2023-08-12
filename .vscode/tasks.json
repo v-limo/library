@@ -36,6 +36,58 @@
         "${workspaceFolder}/library.csproj"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build: debug",
+      "dependsOn": ["build"],
+      "dockerBuild": {
+        "tag": "library:dev",
+        "target": "base",
+        "dockerfile": "${workspaceFolder}/Application.API/Dockerfile",
+        "context": "${workspaceFolder}",
+        "pull": true
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj"
+      }
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build: release",
+      "dependsOn": ["build"],
+      "dockerBuild": {
+        "tag": "library:latest",
+        "dockerfile": "${workspaceFolder}/Application.API/Dockerfile",
+        "context": "${workspaceFolder}",
+        "platform": {
+          "os": "linux",
+          "architecture": "amd64"
+        },
+        "pull": true
+      },
+      "netCore": {
+        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj"
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-run: debug",
+      "dependsOn": ["docker-build: debug"],
+      "dockerRun": {},
+      "netCore": {
+        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj",
+        "enableDebugging": true
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-run: release",
+      "dependsOn": ["docker-build: release"],
+      "dockerRun": {},
+      "netCore": {
+        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj"
+      }
     }
   ]
 }
