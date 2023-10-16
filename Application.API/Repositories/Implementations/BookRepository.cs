@@ -29,7 +29,7 @@ namespace Application.API.Repositories.Implementations
             return book.Entity;
         }
 
-        public async Task<Book> UpdateAsync(Book entity)
+        public async Task<Book>? UpdateAsync(Book entity)
         {
             Book book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == entity.Id);
             if (book == null)
@@ -45,7 +45,7 @@ namespace Application.API.Repositories.Implementations
             return book;
         }
 
-        public async Task<Book> DeleteAsync(int id)
+        public async Task<Book>? DeleteAsync(int id)
         {
             Book book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
             if (book == null)

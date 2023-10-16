@@ -29,7 +29,7 @@ namespace Application.API.Repositories.Implementations
             return author.Entity;
         }
 
-        public async Task<Author> UpdateAsync(Author entity)
+        public async Task<Author>? UpdateAsync(Author entity)
         {
             Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == entity.Id);
             if (author == null)
@@ -44,7 +44,7 @@ namespace Application.API.Repositories.Implementations
             return author;
         }
 
-        public async Task<Author> DeleteAsync(int id)
+        public async Task<Author>? DeleteAsync(int id)
         {
             Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
             if (author == null)
