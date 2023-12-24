@@ -7,9 +7,9 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/Application.API.csproj",
+        "${workspaceFolder}/LibraryApp.sln",
         "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -19,9 +19,9 @@
       "type": "process",
       "args": [
         "publish",
-        "${workspaceFolder}/Application.API.csproj",
+        "${workspaceFolder}/LibraryApp.sln",
         "/property:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
+        "/consoleloggerparameters:NoSummary;ForceNoAlign"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -33,7 +33,7 @@
         "watch",
         "run",
         "--project",
-        "${workspaceFolder}/Application.API.csproj"
+        "${workspaceFolder}/LibraryApp.sln"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -42,14 +42,14 @@
       "label": "docker-build: debug",
       "dependsOn": ["build"],
       "dockerBuild": {
-        "tag": "Application.API:dev",
+        "tag": "library:dev",
         "target": "base",
-        "dockerfile": "${workspaceFolder}/Application.API/Dockerfile",
+        "dockerfile": "${workspaceFolder}/src/LibraryApp.WebApi/Dockerfile",
         "context": "${workspaceFolder}",
         "pull": true
       },
       "netCore": {
-        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj"
+        "appProject": "${workspaceFolder}/src/LibraryApp.WebApi/LibraryApp.WebApi.csproj"
       }
     },
     {
@@ -57,8 +57,8 @@
       "label": "docker-build: release",
       "dependsOn": ["build"],
       "dockerBuild": {
-        "tag": "Application.API:latest",
-        "dockerfile": "${workspaceFolder}/Application.API/Dockerfile",
+        "tag": "library:latest",
+        "dockerfile": "${workspaceFolder}/src/LibraryApp.WebApi/Dockerfile",
         "context": "${workspaceFolder}",
         "platform": {
           "os": "linux",
@@ -67,7 +67,7 @@
         "pull": true
       },
       "netCore": {
-        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj"
+        "appProject": "${workspaceFolder}/src/LibraryApp.WebApi/LibraryApp.WebApi.csproj"
       }
     },
     {
@@ -76,7 +76,7 @@
       "dependsOn": ["docker-build: debug"],
       "dockerRun": {},
       "netCore": {
-        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj",
+        "appProject": "${workspaceFolder}/src/LibraryApp.WebApi/LibraryApp.WebApi.csproj",
         "enableDebugging": true
       }
     },
@@ -86,7 +86,7 @@
       "dependsOn": ["docker-build: release"],
       "dockerRun": {},
       "netCore": {
-        "appProject": "${workspaceFolder}/Application.API/Application.API.csproj"
+        "appProject": "${workspaceFolder}/src/LibraryApp.WebApi/LibraryApp.WebApi.csproj"
       }
     }
   ]
