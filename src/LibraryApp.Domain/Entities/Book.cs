@@ -8,10 +8,10 @@ public class Book
     public int Id { get; set; }
 
     [Required]
-    public string Title { get; set; }
-    public string Description { get; set; }
+    public string Title { get; set; } = null!;
+    public string Description { get; set; } = null!;
     public int AuthorId { get; set; }
-    public Author Author { get; set; }
+    public Author Author { get; set; } = null!;
     public int UserId { get; set; }
     public User User { get; set; } = null!;
 }

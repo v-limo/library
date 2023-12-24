@@ -21,12 +21,10 @@ jobs:
       with:
         dotnet-version: '8.0.x'
 
-    - name: Build API project
+    - name: Build
       run: |
-        cd Reservations.Api
         dotnet build --configuration Release
 
-    - name: Test project
+    - name: Test
       run: |
-        cd Reservations.Test
         dotnet test
