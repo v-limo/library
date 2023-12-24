@@ -2,21 +2,20 @@
 
 #nullable disable
 
-namespace LibraryApp.Infrastructure.Migrations
+namespace LibraryApp.Infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class SecondMigrations : Migration
 {
     /// <inheritdoc />
-    public partial class SecondMigrations : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
 
-        }
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
 
-        }
     }
 }
