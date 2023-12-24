@@ -20,9 +20,9 @@ public class BookRepository : IBookRepository
         return books;
     }
 
-    public async Task<Book> GetByIdAsync(int id)
+    public async Task<Book?> GetByIdAsync(int id)
     {
-        Book book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
+        Book? book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
         return book;
     }
 
@@ -34,9 +34,9 @@ public class BookRepository : IBookRepository
         return book.Entity;
     }
 
-    public async Task<Book> UpdateAsync(Book entity)
+    public async Task<Book?> UpdateAsync(Book entity)
     {
-        Book book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == entity.Id);
+        Book? book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == entity.Id);
         if (book == null)
         {
             return null;
@@ -50,9 +50,9 @@ public class BookRepository : IBookRepository
         return book;
     }
 
-    public async Task<Book> DeleteAsync(int id)
+    public async Task<Book?> DeleteAsync(int id)
     {
-        Book book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
+        Book? book = await _dBcontext.Books.FirstOrDefaultAsync(b => b.Id == id);
         if (book == null)
         {
             return null;
@@ -74,9 +74,9 @@ public class BookRepository : IBookRepository
         return books.ToListAsync();
     }
 
-    public Task<Book> GetAuthorByEmailAsync(string email)
+    public Task<Book?> GetAuthorByEmailAsync(string email)
     {
-        Book book = _dBcontext.Books.FirstOrDefault(b => b.Author.Email == email);
+        Book? book = _dBcontext.Books.FirstOrDefault(b => b.Author.Email == email);
         return Task.FromResult(book);
     }
 }

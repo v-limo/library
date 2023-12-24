@@ -4,5 +4,5 @@ namespace LibraryApp.Domain.Repositories;
 
 public interface IUserRepository : IGenericRepository<User>
 {
-    public Task<User> GetUserByEmailAsync(string email);
+    public Task<User?> GetUserByEmailAsync(string email);
 }

@@ -20,9 +20,9 @@ namespace LibraryApp.Infrastructure.Repositories;
             return authors;
         }
 
-        public async Task<Author> GetByIdAsync(int id)
+        public async Task<Author?> GetByIdAsync(int id)
         {
-            Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            Author? author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
             return author;
         }
 
@@ -34,9 +34,9 @@ namespace LibraryApp.Infrastructure.Repositories;
             return author.Entity;
         }
 
-        public async Task<Author> UpdateAsync(Author entity)
+        public async Task<Author?> UpdateAsync(Author entity)
         {
-            Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == entity.Id);
+            Author? author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == entity.Id);
             if (author == null)
             {
                 return null;
@@ -49,9 +49,9 @@ namespace LibraryApp.Infrastructure.Repositories;
             return author;
         }
 
-        public async Task<Author> DeleteAsync(int id)
+        public async Task<Author?> DeleteAsync(int id)
         {
-            Author author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
+            Author? author = await _dBcontext.Authors.FirstOrDefaultAsync(a => a.Id == id);
             if (author == null)
             {
                 return null;
@@ -66,7 +66,7 @@ namespace LibraryApp.Infrastructure.Repositories;
             return authors;
         }
 
-        public Task<Author> GetAuthorByEmailAsync(string email)
+        public Task<Author?> GetAuthorByEmailAsync(string email)
         {
             var author = _dBcontext.Authors.FirstOrDefaultAsync(a => a.Email == email);
             return author;

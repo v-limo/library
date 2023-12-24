@@ -37,16 +37,16 @@ public class BookService : IBookService
         return bookDTOs;
     }
 
-    public async Task<BookDTO> GetAuthorByEmailAsync(string email)
+    public async Task<BookDTO?> GetAuthorByEmailAsync(string email)
     {
-        Book book = await _bookRepository.GetAuthorByEmailAsync(email);
+        Book? book = await _bookRepository.GetAuthorByEmailAsync(email);
         BookDTO bookDTO = _mapper.Map<BookDTO>(book);
         return bookDTO;
     }
 
-    public async Task<BookDTO> GetBookByIdAsync(int id)
+    public async Task<BookDTO?> GetBookByIdAsync(int id)
     {
-        Book book = await _bookRepository.GetByIdAsync(id);
+        Book? book = await _bookRepository.GetByIdAsync(id);
         BookDTO bookDTO = _mapper.Map<BookDTO>(book);
         return bookDTO;
     }

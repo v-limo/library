@@ -20,7 +20,7 @@ public class UserRepository : IUserRepository
         return users;
     }
 
-    public async Task<User> GetByIdAsync(int id)
+    public async Task<User?> GetByIdAsync(int id)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
         return user;
@@ -33,7 +33,7 @@ public class UserRepository : IUserRepository
         return user.Entity;
     }
 
-    public async Task<User> UpdateAsync(User entity)
+    public async Task<User?> UpdateAsync(User entity)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Id == entity.Id);
         if (user == null)
@@ -47,7 +47,7 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> DeleteAsync(int id)
+    public async Task<User?> DeleteAsync(int id)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Id == id);
         if (user == null)
@@ -59,7 +59,7 @@ public class UserRepository : IUserRepository
         return user;
     }
 
-    public async Task<User> GetUserByEmailAsync(string email)
+    public async Task<User?> GetUserByEmailAsync(string email)
     {
         var user = await _dBcontext.Users.FirstOrDefaultAsync(u => u.Email == email);
         return user;

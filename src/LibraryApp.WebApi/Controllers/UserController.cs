@@ -1,6 +1,5 @@
 using LibraryApp.Application.DTOs;
-using LibraryApp.Application.Service.Interfaces;
-using LibraryApp.Domain.Entities;
+
 
 namespace LibraryApp.WebApi.Controllers;
 
@@ -37,7 +36,7 @@ public class UserController : ControllerBase
         return Ok(user);
     }
 
-    [HttpGet("{email}")]
+    [HttpGet("/{email}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<UserDTO>> GetUserByEmailAsync(string email)
