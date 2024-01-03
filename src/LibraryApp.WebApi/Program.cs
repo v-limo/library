@@ -14,6 +14,7 @@ builder.Services.AddValidators();
 builder.Services.AddCustomDBcontext(builder.Configuration);
 builder.Services.AddCustomServices();
 builder.Services.AddAutoMapper();
+builder.Services.AddCustomCors();
 
 
 var app = builder.Build();
@@ -26,6 +27,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAll");
 
 app.UseAuthorization();
 

@@ -8,4 +8,4 @@ global using LibraryApp.Domain.Repositories;
 global using LibraryApp.Infrastructure.Repositories;
 global using LibraryApp.Domain.Entities;
 global using LibraryApp.Application.Validators;
-global using LibraryApp.WebApi.Controllers.Extensions;
+global using LibraryApp.WebApi.Extensions;

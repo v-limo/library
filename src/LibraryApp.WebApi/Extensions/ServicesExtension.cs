@@ -1,5 +1,5 @@
 
-namespace LibraryApp.WebApi.Controllers.Extensions;
+namespace LibraryApp.WebApi.Extensions;
 
 public static class ServicesExtension
 {
@@ -40,5 +40,31 @@ public static class ServicesExtension
     public static void AddAutoMapper(this IServiceCollection services)
     {
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+    }
+    public static void AddCustomCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                                builder.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                );
+
+
+                options.AddPolicy("Client1", builder =>
+                                builder.WithOrigins("https://client1.com")
+                                .AllowAnyHeader()
+                                .AllowAnyMethod()
+                                );
+
+
+                options.AddPolicy("Client1CRUD", builder =>
+                                builder.WithOrigins("https://client1.com")
+                                .AllowAnyHeader()
+                                .WithMethods("GET", "POST", "PUT", "DELETE")
+                                );
+            }
+        );
     }
 }
