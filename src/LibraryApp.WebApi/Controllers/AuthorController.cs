@@ -23,7 +23,7 @@ public class AuthorController : ControllerBase
         return Ok(Authors);
     }
 
-    [HttpGet("/{id}")]
+    [HttpGet("/{id:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<AuthorDTO>> GetAuthorByIdAsync(int id)
@@ -34,7 +34,7 @@ public class AuthorController : ControllerBase
             : (ActionResult<AuthorDTO>)Ok(Author);
     }
 
-    [HttpGet("{email}")]
+    [HttpGet("{email:alpha}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<AuthorDTO>> GetAuthorByEmailAsync(string email)

@@ -1,0 +1,11 @@
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.EntityFrameworkCore;
+global using FluentValidation;
+global using LibraryApp.Infrastructure.Data;
+global using LibraryApp.Application.Service.Interfaces;
+global using LibraryApp.Application.Service.Implementations;
+global using LibraryApp.Domain.Repositories;
+global using LibraryApp.Infrastructure.Repositories;
+global using LibraryApp.Domain.Entities;
+global using LibraryApp.Application.Validators;
+global using LibraryApp.WebApi.Controllers.Extensions;
